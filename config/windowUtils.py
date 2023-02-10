@@ -1,4 +1,3 @@
-window_params = {
-    "width": 500,
-    "height": 700
-}
+WIDTH = 500
+HEIGHT = 700
+BACKGROUND = "./assets/background.png"

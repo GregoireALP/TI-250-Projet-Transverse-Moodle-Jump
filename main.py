@@ -1,27 +1,13 @@
+import core.game as game
 import pygame
-import utils.window as w
-import utils.constants as c
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+
+    # On initialise Pygame
     pygame.init()
 
-    """
-    GAME LOOP
-    """
-    isRunning = True
-    while isRunning:
+    # On instancie la classe de jeu
+    game = game.Game()
 
-        # Setting background image
-        w.WINDOW.blit(w.backgroundPicture, (0, 0))
-
-        # Check for all current events
-        for e in pygame.event.get():
-
-            # If QUIT event
-            if e.type == pygame.QUIT:
-                isRunning = False
-
-        # Update console at the end of the loop
-        pygame.display.update()
-
-    pygame.quit()
+    # On lance le jeu en appelant sa méthode run()
+    game.run()
