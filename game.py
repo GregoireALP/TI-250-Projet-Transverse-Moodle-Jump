@@ -12,7 +12,7 @@ class Game:
         # Création de la fenêtre de jeu
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Moodle Jump")
-        pygame.display.set_icon(pygame.image.load('player2.png'))
+        pygame.display.set_icon(pygame.image.load('assets/player2.png'))
 
         self.clock = pygame.time.Clock()
 
@@ -31,7 +31,7 @@ class Game:
             player.rect.x = 10
 
         # Création de l'arrière-plan
-        background = pygame.image.load('dark_background.png')
+        background = pygame.image.load('assets/dark_background.png')
         background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
         # Boucle de jeu permettant à l'utilisateur de fermer la fenêtre
