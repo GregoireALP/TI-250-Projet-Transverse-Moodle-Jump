@@ -1,9 +1,15 @@
 # Import et initialise la bibliothèque pygame
+import random
+
 import pygame
 import sys
+from random import *
+
+import constants
 from constants import *
 from platform import *
 from user import *
+
 
 
 class Game:
@@ -25,7 +31,8 @@ class Game:
 
         # Attribution des sprites a une variable
         player = Player()
-        platform = Platform()
+
+        platform = Platform(randint(1, constants.SCREEN_WIDTH), randint(1, constants.SCREEN_HEIGHT))
 
         if player.rect.colliderect(platform.rect):
             player.rect.x = 10

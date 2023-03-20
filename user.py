@@ -24,10 +24,14 @@ class Player(pygame.sprite.Sprite):
             self.move_right()
         if key[pygame.K_LEFT] or key[pygame.K_q]:
             self.move_left()
-        if key[pygame.K_UP] or key[pygame.K_SPACE]:
+        if key[pygame.K_UP]:
             self.jump()
 
         self.update(platform)
+
+    def handle_bullet(self, key):
+        if key[pygame.K_SPACE]:
+            return True
 
     def move_right(self):
         self.rect.x += self.speed
