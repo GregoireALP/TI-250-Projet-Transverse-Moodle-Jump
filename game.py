@@ -1,7 +1,7 @@
 # Import et initialise la bibliothèque pygame
 import random
 
-import pygame
+import pygamegit
 import sys
 from random import *
 
@@ -9,7 +9,7 @@ import constants
 from constants import *
 from platform import *
 from user import *
-
+from user import Player
 
 
 class Game:
@@ -37,6 +37,9 @@ class Game:
         if player.rect.colliderect(platform.rect):
             player.rect.x = 10
 
+        for projectile in player.bullets:
+            projectile.move()
+
         # Création de l'arrière-plan
         background = pygame.image.load('assets/dark_background.png')
         background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -50,6 +53,7 @@ class Game:
                     running = False
 
             player.handle_movement(key, platform)
+            player.handle_bullet(key)
 
             collide = player.rect.y >= (platform.rect.y - platform.rect.height)
 
@@ -66,6 +70,7 @@ class Game:
             self.screen.blit(background, (0, 0))
             self.draw_sprite(player)
             self.draw_sprite(platform)
+            player.bullets.draw(self.screen)
 
             pygame.display.flip()
 

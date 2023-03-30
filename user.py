@@ -1,6 +1,6 @@
 from game import *
 import pygame
-
+from  bullet import Bullet
 
 class Player(pygame.sprite.Sprite):
 
@@ -11,6 +11,8 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = SCREEN_WIDTH / 2 - self.rect.width / 2
         self.rect.y = SCREEN_HEIGHT - self.rect.height
+
+        self.bullets = pygame.sprite.Group()
 
         self.velocity_y = 0
         self.speed = 4
@@ -31,7 +33,7 @@ class Player(pygame.sprite.Sprite):
 
     def handle_bullet(self, key):
         if key[pygame.K_SPACE]:
-            return True
+            self.bullets.add(Bullet(self))
 
     def move_right(self):
         self.rect.x += self.speed
