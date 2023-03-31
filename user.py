@@ -49,6 +49,3 @@ class Player(pygame.sprite.Sprite):
         if self.jumping:
             self.rect.y -= self.velocity_y
             self.velocity_y -= GRAVITY
-            if self.rect.y >= SCREEN_HEIGHT - self.rect.height:
-                self.rect.y = SCREEN_HEIGHT - self.rect.height
-                self.jumping = False

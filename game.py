@@ -16,6 +16,7 @@ class Game:
         pygame.display.set_icon(pygame.image.load('assets/player2.png'))
 
         self.clock = pygame.time.Clock()
+        self.font = pygame.font.SysFont("comicsansms", 48)
 
         self.state = "menu"
 
@@ -23,6 +24,9 @@ class Game:
         self.map_rect = None
         self.play_rect = None
         self.title_rect = None
+
+        self.score_rect = None
+        self.replat_rect = None
 
     def draw_menu(self):
         # Design
@@ -33,11 +37,10 @@ class Game:
         self.screen.blit(background, (0, 0))
 
         # Création du texte du menu
-        font = pygame.font.SysFont("comicsansms", 48)
-        title = font.render("Moodle Jump", True, (255, 255, 255))
-        play = font.render("Jouer", True, (255, 255, 255))
-        map = font.render("Map", True, (255, 255, 255))
-        quit = font.render("Quitter", True, (255, 255, 255))
+        title = self.font.render("Moodle Jump", True, (255, 255, 255))
+        play = self.font.render("Jouer", True, (255, 255, 255))
+        map = self.font.render("Map", True, (255, 255, 255))
+        quit = self.font.render("Quitter", True, (255, 255, 255))
 
         # Positionner les textes sur l'écran
         self.title_rect = title.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
@@ -50,6 +53,18 @@ class Game:
         self.screen.blit(play, self.play_rect)
         self.screen.blit(map, self.map_rect)
         self.screen.blit(quit, self.quit_rect)
+
+        pygame.display.flip()
+
+    def draw_score(self):
+        score = self.font.render("Score", True, (255, 255, 255))
+        replay = self.font.render("Rejouer", True, (255, 255, 255))
+
+        self.score_rect = score.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
+        self.replat_rect = replay.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+
+        self.screen.blit(score, self.score_rect)
+        self.screen.blit(replay, self.replat_rect)
 
         pygame.display.flip()
 
@@ -75,6 +90,7 @@ class Game:
             self.clock.tick(FPS)
             key = pygame.key.get_pressed()
             mouse_pos = pygame.mouse.get_pos()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or key[pygame.K_BACKSPACE]:
                     running = False
@@ -93,6 +109,9 @@ class Game:
 
             if self.state == "menu":
                 self.draw_menu()
+
+            if self.state == "end":
+                self.draw_score()
 
             elif self.state == "playing":
                 # Appelle la fonction permettant de controller le joueur.
@@ -115,6 +134,10 @@ class Game:
 
                     self.draw_sprite(platform)
                     platforms.update_plateforms()
+
+                # Regarde si le joueur est toujours sur l'ecram
+                if player.rect.y > constants.SCREEN_HEIGHT:
+                    self.state = "end"
 
                 pygame.display.flip()
 
