@@ -2,6 +2,7 @@
 import pygame
 import sys
 from constants import *
+from plateforms import Platforms
 from platform import *
 from user import *
 
@@ -54,7 +55,7 @@ class Game:
 
     def draw_sprite(self, sprite):
         self.screen.blit(sprite.image, sprite.rect)
-        #pygame.draw.rect(self.screen, (255, 255, 255), sprite.rect, 2)
+        # pygame.draw.rect(self.screen, (255, 255, 255), sprite.rect, 2)
 
     def run(self):
         running = True
@@ -63,7 +64,7 @@ class Game:
 
         # Attribution des sprites a une variable
         player = Player()
-        platform = Platform()
+        platforms = Platforms()
 
         # Création de l'arrière-plan
         background = pygame.image.load('assets/dark_background.png')
@@ -92,22 +93,28 @@ class Game:
 
             if self.state == "menu":
                 self.draw_menu()
+
             elif self.state == "playing":
                 # Appelle la fonction permettant de controller le joueur.
-                player.handle_movement(key, platform)
-                # Saut automatique TODO enlever le # pour activer
-                player.jump()
-
-                # Gérer la collision entre le jouer et les plateformes
-                if player.rect.colliderect(platform.rect):
-                    if player.velocity_y <= 0:  # Vérifie si le joueur tombe
-                        player.rect.bottom = platform.rect.top
-                        player.jumping = False
-                        player.velocity_y = 0
+                player.handle_movement(key)
 
                 self.screen.blit(background, (0, 0))
                 self.draw_sprite(player)
-                self.draw_sprite(platform)
+
+                for platform in platforms.platforms:
+
+                    # Gérer la collision entre le jouer et les plateformes
+                    if player.rect.colliderect(platform.rect):
+                        if player.velocity_y <= 0:  # Vérifie si le joueur tombe
+                            player.rect.bottom = platform.rect.top
+                            player.jumping = False
+                            player.velocity_y = 0
+
+                        # Saut automatique TODO enlever le # pour activer
+                        player.jump()
+
+                    self.draw_sprite(platform)
+                    platforms.update_plateforms()
 
                 pygame.display.flip()
 
