@@ -1,6 +1,8 @@
 # Import et initialise la bibliothèque pygame
 import pygame
 import sys
+
+import chronometre
 from constants import *
 from plateforms import Platforms
 from platform import *
@@ -56,8 +58,8 @@ class Game:
 
         pygame.display.flip()
 
-    def draw_score(self):
-        score = self.font.render("Score", True, (255, 255, 255))
+    def draw_score(self, score):
+        score = self.font.render(f"Score: {score}", True, (255, 255, 255))
         replay = self.font.render("Rejouer", True, (255, 255, 255))
 
         self.score_rect = score.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
@@ -80,6 +82,7 @@ class Game:
         # Attribution des sprites a une variable
         player = Player()
         platforms = Platforms()
+        chrono = chronometre.Chronometre()
 
         # Création de l'arrière-plan
         background = pygame.image.load('assets/dark_background.png')
@@ -111,7 +114,7 @@ class Game:
                 self.draw_menu()
 
             if self.state == "end":
-                self.draw_score()
+                self.draw_score(chrono.get_time() / 1000)
 
             elif self.state == "playing":
                 # Appelle la fonction permettant de controller le joueur.
@@ -119,6 +122,8 @@ class Game:
 
                 self.screen.blit(background, (0, 0))
                 self.draw_sprite(player)
+
+                chrono.running()
 
                 for platform in platforms.platforms:
 
@@ -138,6 +143,7 @@ class Game:
                 # Regarde si le joueur est toujours sur l'ecram
                 if player.rect.y > constants.SCREEN_HEIGHT:
                     self.state = "end"
+                    chrono.stop()
 
                 pygame.display.flip()
 

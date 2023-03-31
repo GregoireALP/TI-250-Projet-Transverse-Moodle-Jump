@@ -16,12 +16,12 @@ def generate_platforms():
     platform_positions = []
 
     # Génération des plateformes
-    while current_height < constants.SCREEN_HEIGHT:
+    for i in range(25):
         # Calcul de la position de la nouvelle plateforme
         new_platform_pos = (random.randint(0, constants.SCREEN_WIDTH), current_height + platform_gap)
 
         # Vérification si la nouvelle plateforme ne dépasse pas la hauteur maximale
-        if new_platform_pos[1] >= constants.SCREEN_HEIGHT:
+        if new_platform_pos[1] >= constants.SCREEN_HEIGHT * 10:
             break
 
         # Vérification si l'écart entre les plateformes est équilibré
@@ -50,6 +50,9 @@ class Platforms:
 
     def init_plateforms(self):
         # init plateform where player appears
+        self.platforms.add(platform.Platform(constants.PLAYER_SPWAN[0], constants.PLAYER_SPWAN[1]))
+
+        # Generate plateforms
         for position in generate_platforms():
             self.platforms.add(platform.Platform(position[0], position[1]))
 
