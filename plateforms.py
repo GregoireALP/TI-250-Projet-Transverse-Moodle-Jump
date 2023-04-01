@@ -45,18 +45,32 @@ def generate_platforms():
 class Platforms:
 
     def __init__(self):
+
         self.platforms = pygame.sprite.Group()
         self.init_plateforms()
 
     def init_plateforms(self):
+
         # init plateform where player appears
         self.platforms.add(platform.Platform(constants.PLAYER_SPWAN[0], constants.PLAYER_SPWAN[1]))
 
         # Generate plateforms
         for position in generate_platforms():
-            self.platforms.add(platform.Platform(position[0], position[1], True))
+
+            self.platforms.add(platform.Platform(position[0], position[1], False, False))
 
     def update_plateforms(self):
+        
         for pl in self.platforms:
+
             pl.rect.y += 0
+
+            # Check if plateform is moving
+            if pl.isMoving:
+                if pl.rect.x > constants.SCREEN_WIDTH:
+                    pl.velocity_x = -1
+                elif pl.rect.x < 0:
+                    pl.velocity_x = 1
+
+                pl.rect.x += pl.velocity_x
 

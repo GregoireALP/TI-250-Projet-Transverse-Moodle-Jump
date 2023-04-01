@@ -3,7 +3,9 @@ SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 400
 FPS = 60
 
+# Paramètres du joueur
 PLAYER_SPWAN = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 200)
+
 # Réglage des couleurs
 BACKGROUND_COLOR = (250, 240, 197)
 
