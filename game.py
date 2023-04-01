@@ -134,6 +134,10 @@ class Game:
                             player.jumping = False
                             player.velocity_y = 0
 
+                            # Errase plateform if isDisapear is True
+                            if platform.isDisappear:
+                                platforms.platforms.remove(platform)
+
                         # Saut automatique TODO enlever le # pour activer
                         player.jump()
 
