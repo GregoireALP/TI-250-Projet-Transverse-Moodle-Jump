@@ -1,4 +1,5 @@
 import constants
+import bullet
 from game import *
 import pygame
 
@@ -19,8 +20,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = constants.PLAYER_SPWAN[1]
 
         self.velocity_y = 0
-        self.speed = 4
-        self.jumpForce = 15
+        self.speed = 3
+        self.jumpForce = 12
         self.jumping = False
 
         self.on_platform = False
@@ -31,6 +32,8 @@ class Player(pygame.sprite.Sprite):
             self.move_right()
         if key[pygame.K_LEFT] or key[pygame.K_q]:
             self.move_left()
+        if key[pygame.K_SPACE]:
+            self.shoot()
 
         self.update()
 
@@ -56,8 +59,15 @@ class Player(pygame.sprite.Sprite):
         self.jumping = True
         self.velocity_y = self.jumpForce
 
+    def reset(self):
+        self.rect.x = constants.PLAYER_SPWAN[0]
+        self.rect.y = constants.PLAYER_SPWAN[1]
+
+    def shoot(self):
+        b = bullet.Bullet(self.rect.x, self.rect.y)
+
     def update(self):
-        
+
         if self.jumping:
             self.rect.y -= self.velocity_y
             self.velocity_y -= GRAVITY

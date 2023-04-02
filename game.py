@@ -66,6 +66,18 @@ class Game:
                     if key[pygame.K_ESCAPE]:
                         self.state = "menu"
 
+                if self.state == "end":
+                    if self.replat_rect.collidepoint(mouse_pos):
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                            self.state = "playing"
+                            chrono.reset()
+                            platforms.reset()
+                            player.reset()
+
+                    if self.quit_rect.collidepoint(mouse_pos):
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                            running = False
+
                 if self.state == "menu":
 
                     if self.play_rect.collidepoint(mouse_pos):
@@ -106,14 +118,21 @@ class Game:
 
                             # Errase plateform if isDisapear is True
                             if platform.isDisappear:
-                                
+
                                 platforms.platforms.remove(platform)
 
                         # Saut automatique TODO enlever le # pour activer
                         player.jump()
 
                     drawers.draw_sprite(self, platform)
-                    platforms.update_plateforms()
+
+                platforms.update_plateforms()
+
+                # Si le joeur est dans le 1/3 de l'ecran on fait descendre les plateformes plus vite
+                if player.rect.y < (constants.SCREEN_HEIGHT * 0.3):
+                    platforms.speed = 4
+                else:
+                    platforms.speed = 2
 
                 # Regarde si le joueur est toujours sur l'ecram
                 if player.rect.y > constants.SCREEN_HEIGHT:

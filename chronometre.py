@@ -21,6 +21,11 @@ class Chronometre:
     def stop(self):
         self.run = False
 
+    # Fonction permettant de remettre le chronomètre à 0
+    def reset(self):
+        self.time = 0
+        self.run = True
+
     # Fonction permettant de récupérer le temps
     def get_time(self):
         return self.time

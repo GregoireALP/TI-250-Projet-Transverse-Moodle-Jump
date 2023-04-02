@@ -1,5 +1,5 @@
 # Paramètres de la fenêtre de jeu
-SCREEN_HEIGHT = 600
+SCREEN_HEIGHT = 700
 SCREEN_WIDTH = 400
 FPS = 60
 
@@ -11,3 +11,7 @@ BACKGROUND_COLOR = (250, 240, 197)
 
 # Paramètres du jeu
 GRAVITY = 0.7
+
+PLATEFORMS = 8
+WHITE_PLATEFORM_PROB = 0.2
+
