@@ -122,6 +122,7 @@ class Game:
 
                 for platform in platforms.platforms:
 
+                    # TODO Faire en sorte de capter la collision si le joueur est entièrement au dessus de la plateforme
                     # Gérer la collision entre le jouer et les plateformes
                     if player.rect.colliderect(platform.rect):
                         if player.velocity_y <= 0:  # Vérifie si le joueur tombe
@@ -129,7 +130,7 @@ class Game:
                             player.jumping = False
                             player.velocity_y = 0
 
-                        # Saut automatique TODO enlever le # pour activer
+                        # Saut automatique // enlever le # pour activer
                         player.jump()
 
                     self.draw_sprite(platform)
