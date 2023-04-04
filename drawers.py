@@ -1,4 +1,6 @@
 import pygame
+
+import constants
 from constants import *
 
 def draw_menu(self):
@@ -6,7 +8,7 @@ def draw_menu(self):
     # Création de la fenêtre de jeu
     pygame.display.set_caption("Menu Moodle Jump")
     background = pygame.image.load('assets/cloud_background.jpg')
-    background = pygame.transform.scale(background, (400, 600))
+    background = pygame.transform.scale(background, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 
     # Affichage de l'arrière-plan
     self.screen.blit(background, (0, 0))

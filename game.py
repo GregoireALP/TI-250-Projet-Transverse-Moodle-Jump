@@ -132,7 +132,7 @@ class Game:
                 if player.rect.y < (constants.SCREEN_HEIGHT * 0.3):
                     platforms.speed = 4
                 else:
-                    platforms.speed = 2
+                    platforms.speed = 0
 
                 # Regarde si le joueur est toujours sur l'ecram
                 if player.rect.y > constants.SCREEN_HEIGHT:
