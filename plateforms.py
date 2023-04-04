@@ -52,8 +52,7 @@ class Platforms:
 
         # Generate plateforms
         for position in generate_platforms():
-            self.platforms.add(platform.Platform(
-                position[0], position[1], False, False))
+            self.platforms.add(platform.Platform(position[0], position[1], False, False))
 
     def update_plateforms(self):
 

@@ -40,7 +40,7 @@ def draw_menu(self):
 
 def draw_score(self, score):
 
-    score = self.font.render(f"Score: {score}", True, (255, 255, 255))
+    score = self.font.render("Score: " + str(score), True, (255, 255, 255))
     replay = self.font.render("Rejouer", True, (255, 255, 255))
 
     self.score_rect = score.get_rect(
