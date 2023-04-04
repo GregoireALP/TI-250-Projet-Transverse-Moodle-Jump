@@ -2,6 +2,7 @@
 import pygame
 import sys
 
+import constants
 import drawers
 from constants import *
 from plateforms import Platforms
@@ -34,7 +35,7 @@ class Game:
         # Design
         pygame.display.set_caption("Menu Moodle Jump")
         background = pygame.image.load('assets/cloud_background.jpg')
-        background = pygame.transform.scale(background, (400, 600))
+        background = pygame.transform.scale(background, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 
         self.screen.blit(background, (0, 0))
 
@@ -135,7 +136,7 @@ class Game:
                         # Saut automatique // enlever le # pour activer
                         player.jump()
 
-                drawers.draw_sprite(self, platforms)
+                    drawers.draw_sprite(self, platform)
 
                 platforms.update_plateforms()
 
