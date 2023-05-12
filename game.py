@@ -1,9 +1,10 @@
 # Import et initialise la bibliothèque pygame
 import pygame
 import sys
-import chronometre
-import drawers
 
+import constants
+import drawers
+import chronometre
 from constants import *
 from plateforms import Platforms
 from platform import *
@@ -13,7 +14,6 @@ from user import *
 class Game:
 
     def __init__(self):
-
         # Création de la fenêtre de jeu
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Moodle Jump")
@@ -32,11 +32,9 @@ class Game:
         self.score_rect = None
         self.replat_rect = None
 
-
     def run(self):
         running = True
 
-        # Création du texte du menu
         drawers.draw_menu(self)
 
         # Attribution des sprites a une variable
@@ -50,15 +48,11 @@ class Game:
 
         # Boucle de jeu permettant à l'utilisateur de fermer la fenêtre
         while running:
-
-            
             self.clock.tick(FPS)
-
             key = pygame.key.get_pressed()
             mouse_pos = pygame.mouse.get_pos()
 
             for event in pygame.event.get():
-
                 if event.type == pygame.QUIT or key[pygame.K_BACKSPACE]:
                     running = False
 
@@ -66,6 +60,15 @@ class Game:
                     if key[pygame.K_ESCAPE]:
                         self.state = "menu"
 
+                if self.state == "menu":
+                    if self.play_rect.collidepoint(mouse_pos):
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                            self.state = "playing"
+                    if self.quit_rect.collidepoint(mouse_pos):
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                            running = False
+
+                
                 if self.state == "end":
                     if self.replat_rect.collidepoint(mouse_pos):
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -77,51 +80,39 @@ class Game:
                     if self.quit_rect.collidepoint(mouse_pos):
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                             running = False
-
-                if self.state == "menu":
-
-                    if self.play_rect.collidepoint(mouse_pos):
-                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                            self.state = "playing"
-
-                    if self.quit_rect.collidepoint(mouse_pos):
-                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                            running = False
+                    
+                    
 
             if self.state == "menu":
                 drawers.draw_menu(self)
 
             if self.state == "end":
-                drawers.draw_score(self, chrono.get_time() / 1000)
+                drawers.draw_score(self, chrono.get_time())
 
             elif self.state == "playing":
+
+                # Met a jour le chrono
+                chrono.running()
+
                 # Appelle la fonction permettant de controller le joueur.
                 player.handle_movement(key)
 
                 self.screen.blit(background, (0, 0))
                 drawers.draw_sprite(self, player)
 
-                # Gérer la gravité du joueur
-                chrono.running()
-
-                # Gérer la la collision des plateformes et des evenements de la plateforme
                 for platform in platforms.platforms:
 
                     # Gérer la collision entre le jouer et les plateformes
                     if player.rect.colliderect(platform.rect):
-
                         if player.velocity_y <= 0:  # Vérifie si le joueur tombe
-
                             player.rect.bottom = platform.rect.top
                             player.jumping = False
                             player.velocity_y = 0
 
-                            # Errase plateform if isDisapear is True
                             if platform.isDisappear:
-
                                 platforms.platforms.remove(platform)
 
-                        # Saut automatique TODO enlever le # pour activer
+                        # Saut automatique // enlever le # pour activer
                         player.jump()
 
                     drawers.draw_sprite(self, platform)
@@ -132,7 +123,7 @@ class Game:
                 if player.rect.y < (constants.SCREEN_HEIGHT * 0.3):
                     platforms.speed = 4
                 else:
-                    platforms.speed = 2
+                    platforms.speed = 0
 
                 # Regarde si le joueur est toujours sur l'ecram
                 if player.rect.y > constants.SCREEN_HEIGHT:

@@ -10,7 +10,7 @@ def generate_platforms():
     # Initialisation des variables
     current_height = constants.PLAYER_SPWAN[1]
 
-    platform_gap_y = 120
+    platform_gap_y = 100
     platform_gap_x = 20
 
     positions = []
@@ -52,8 +52,7 @@ class Platforms:
 
         # Generate plateforms
         for position in generate_platforms():
-            self.platforms.add(platform.Platform(
-                position[0], position[1], False, False))
+            self.platforms.add(platform.Platform(position[0], position[1], False, False))
 
     def update_plateforms(self):
 
