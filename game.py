@@ -20,7 +20,7 @@ class Game:
         pygame.display.set_icon(pygame.image.load('assets/player2.png'))
 
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.SysFont("comicsansms", 48)
+        self.font = pygame.font.SysFont("timenewroman", 48)
 
         self.state = "menu"
 
