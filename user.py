@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
 
         self.velocity_y = 0
         self.speed = 3
-        self.jumpForce = 12
+        self.jumpForce = 13
         self.jumping = False
 
         self.on_platform = False

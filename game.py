@@ -120,7 +120,9 @@ class Game:
                 platforms.update_plateforms()
 
                 # Si le joeur est dans le 1/3 de l'ecran on fait descendre les plateformes plus vite
-                if player.rect.y < (constants.SCREEN_HEIGHT * 0.3):
+                if player.rect.y < 0:
+                    platforms.speed = 7
+                elif player.rect.y < (constants.SCREEN_HEIGHT * 0.3):
                     platforms.speed = 4
                 else:
                     platforms.speed = 0
