@@ -15,7 +15,7 @@ def draw_menu(self):
     self.screen.blit(background, (0, 0))
 
     # Création du texte du menu
-    title = self.font.render("Moodle Jump", True, (255, 255, 255))
+    title = self.font.render("Moodle Jump", True, (0, 0, 0))
     play = self.font.render("Jouer", True, (255, 255, 255))
     map = self.font.render("Map", True, (255, 255, 255))
     quit = self.font.render("Quitter", True, (255, 255, 255))

@@ -95,9 +95,9 @@ class Game:
                 chrono.running()
 
                 # Regarde si le temps est écoulé
-                timer = self.font.render(str(chrono.get_time()), True, (255, 255, 255))
-                timer_rect = timer.get_rect((0, 0))
-                self.screen.blit(timer, timer_rect)
+                #timer = self.font.render(str(chrono.get_time()), True, (255, 255, 255))
+                #timer_rect = timer.get_rect((0, 0))
+                #self.screen.blit(timer, timer_rect)
 
                 # Appelle la fonction permettant de controller le joueur.
                 player.handle_movement(key)
