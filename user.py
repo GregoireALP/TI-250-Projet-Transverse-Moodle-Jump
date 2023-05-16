@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
 
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.image.load('assets/player2.png')
+        self.image = pygame.image.load('assets/player.png')
         self.image = pygame.transform.scale(self.image, (50, 50))
 
         self.rect = self.image.get_rect()
@@ -23,6 +23,8 @@ class Player(pygame.sprite.Sprite):
         self.speed = 3
         self.jumpForce = 12
         self.jumping = False
+
+        self.score = 0
 
         self.on_platform = False
 
@@ -67,6 +69,9 @@ class Player(pygame.sprite.Sprite):
         b = bullet.Bullet(self.rect.x, self.rect.y)
 
     def update(self):
+
+        if self.velocity_y > 0:
+            self.score += 1
 
         if self.jumping:
             self.rect.y -= self.velocity_y
