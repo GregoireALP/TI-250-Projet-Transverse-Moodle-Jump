@@ -8,8 +8,8 @@ def draw_menu(self):
 
     # Création de la fenêtre de jeu
     pygame.display.set_caption("Menu Moodle Jump")
-    background = pygame.image.load('assets/menu_background2.png')
-    background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    background = pygame.image.load('assets/menu.png')
+    background = pygame.transform.scale(background, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 
     # Affichage de l'arrière-plan
     self.screen.blit(background, (0, 0))

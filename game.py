@@ -17,10 +17,10 @@ class Game:
         # Création de la fenêtre de jeu
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Moodle Jump")
-        pygame.display.set_icon(pygame.image.load('assets/player2.png'))
+        pygame.display.set_icon(pygame.image.load('assets/player.png'))
 
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.SysFont("comicsansms", 48)
+        self.font = pygame.font.SysFont("timenewroman", 48)
 
         self.state = "menu"
 
@@ -87,12 +87,17 @@ class Game:
                 drawers.draw_menu(self)
 
             if self.state == "end":
-                drawers.draw_score(self, chrono.get_time())
+                drawers.draw_score(self, player.score)
 
             elif self.state == "playing":
 
                 # Met a jour le chrono
                 chrono.running()
+
+                # Regarde si le temps est écoulé
+                timer = self.font.render(str(chrono.get_time()), True, (255, 255, 255))
+                timer_rect = timer.get_rect((0, 0))
+                self.screen.blit(timer, timer_rect)
 
                 # Appelle la fonction permettant de controller le joueur.
                 player.handle_movement(key)
@@ -130,7 +135,6 @@ class Game:
                 # Regarde si le joueur est toujours sur l'ecram
                 if player.rect.y > constants.SCREEN_HEIGHT:
                     self.state = "end"
-                    chrono.stop()
 
                 pygame.display.flip()
 
