@@ -3,6 +3,7 @@ import pygame
 import sys
 
 import constants
+import bullet
 import drawers
 import chronometre
 from constants import *
@@ -40,7 +41,10 @@ class Game:
         # Attribution des sprites a une variable
         player = Player()
         platforms = Platforms()
+        bullets = pygame.sprite.Group()
+
         chrono = chronometre.Chronometre()
+        bullet_timer = pygame.time.get_ticks()
 
         # Création de l'arrière-plan
         background = pygame.image.load('assets/dark_background.png')
@@ -48,7 +52,10 @@ class Game:
 
         # Boucle de jeu permettant à l'utilisateur de fermer la fenêtre
         while running:
+
             self.clock.tick(FPS)
+            current_time = pygame.time.get_ticks()
+
             key = pygame.key.get_pressed()
             mouse_pos = pygame.mouse.get_pos()
 
@@ -94,6 +101,13 @@ class Game:
                 # Met a jour le chrono
                 chrono.running()
 
+                # Apparition des bullet
+                if current_time - bullet_timer > 2000:
+                    nb = bullet.Bullet()
+                    bullets.add(nb)
+                    bullet_timer = current_time
+                         
+
                 # Regarde si le temps est écoulé
                 #timer = self.font.render(str(chrono.get_time()), True, (255, 255, 255))
                 #timer_rect = timer.get_rect((0, 0))
@@ -122,7 +136,15 @@ class Game:
 
                     drawers.draw_sprite(self, platform)
 
+                # Gérer la collision entre le joueur et les bullets et le jeu s'arrete
+                for b in bullets:
+                    if player.rect.colliderect(b.rect):
+                        self.state = "end"
+
+
                 platforms.update_plateforms()
+                bullets.update()
+                bullets.draw(self.screen)
 
                 # Si le joeur est dans le 1/3 de l'ecran on fait descendre les plateformes plus vite
                 if player.rect.y < 0:
