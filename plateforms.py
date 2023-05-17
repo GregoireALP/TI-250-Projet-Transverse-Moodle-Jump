@@ -10,8 +10,8 @@ def generate_platforms():
     # Initialisation des variables
     current_height = constants.PLAYER_SPWAN[1]
 
-    platform_gap_y = 80
-    platform_gap_x = 20
+    platform_gap_y = 175
+    platform_gap_x = 40
 
     positions = []
 
@@ -19,7 +19,7 @@ def generate_platforms():
         current_height -= platform_gap_y
 
         # Generate random position for platforms
-        position_x = random.randint(platform_gap_x, constants.SCREEN_WIDTH - platform_gap_x)
+        position_x = random.randint(platform_gap_x, constants.SCREEN_WIDTH - platform_gap_x) - 20
 
         # Check if platform is not too close from the previous one
         if len(positions) > 0:

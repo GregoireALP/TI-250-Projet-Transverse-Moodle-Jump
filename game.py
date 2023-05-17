@@ -102,7 +102,7 @@ class Game:
                 chrono.running()
 
                 # Apparition des bullet
-                if current_time - bullet_timer > 2000:
+                if current_time - bullet_timer > 6000:
                     nb = bullet.Bullet()
                     bullets.add(nb)
                     bullet_timer = current_time
@@ -131,8 +131,8 @@ class Game:
                             if platform.isDisappear:
                                 platforms.platforms.remove(platform)
 
-                        # Saut automatique // enlever le # pour activer
-                        player.jump()
+                            player.jump()
+                        
 
                     drawers.draw_sprite(self, platform)
 
@@ -147,9 +147,9 @@ class Game:
                 bullets.draw(self.screen)
 
                 # Si le joeur est dans le 1/3 de l'ecran on fait descendre les plateformes plus vite
-                if player.rect.y < 0:
+                if player.rect.y < (constants.SCREEN_HEIGHT * 0.2):
                     platforms.speed = 10
-                elif player.rect.y < (constants.SCREEN_HEIGHT * 0.3):
+                elif player.rect.y < (constants.SCREEN_HEIGHT * 0.6):
                     platforms.speed = 4
                 else:
                     platforms.speed = 0

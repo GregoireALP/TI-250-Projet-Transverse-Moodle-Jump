@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = constants.PLAYER_SPWAN[1]
 
         self.velocity_y = 0
-        self.speed = 3
+        self.speed = 6
         self.jumpForce = 13
         self.jumping = False
 

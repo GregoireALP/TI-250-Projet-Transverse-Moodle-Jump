@@ -14,7 +14,7 @@ class Bullet(pygame.sprite.Sprite):
         # positionnement aléatoire de la balle
         self.rect = self.image.get_rect()
         self.rect.x = 0
-        self.rect.y = random.randint(0, constants.SCREEN_HEIGHT - self.rect.height)
+        self.rect.y = random.randint(0, constants.SCREEN_HEIGHT * 0.5)
 
         # vélocité et gravité
         # vitesse initiale aléatoire et temps de départ
