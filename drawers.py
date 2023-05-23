@@ -17,23 +17,28 @@ def draw_menu(self):
     # Création du texte du menu
     title = self.font.render("Moodle Jump", True, (0, 0, 0))
     play = self.font.render("Jouer", True, (255, 255, 255))
-    map = self.font.render("Map", True, (255, 255, 255))
+    rules = self.font.render("Règle", True, (255, 255, 255))
     quit = self.font.render("Quitter", True, (255, 255, 255))
+    credit = self.font.render("C", True, (255, 255, 255))
 
     # Positionner les textes sur l'écran
     self.title_rect = title.get_rect(
         center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
     self.play_rect = play.get_rect(
         center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
-    self.map_rect = map.get_rect(
+    self.rules_rect = rules.get_rect(
         center=(SCREEN_WIDTH / 2, 4 * SCREEN_HEIGHT / 6))
     self.quit_rect = quit.get_rect(
         center=(SCREEN_WIDTH / 2, 5 * SCREEN_HEIGHT / 6))
+    # Créer un rectangle pour cliquer sur le crédit
+    self.credit_rect = credit.get_rect(
+        center=(SCREEN_WIDTH - 30, SCREEN_HEIGHT - 20)
+    )
 
     # Dessiner les textes sur l'écran
     self.screen.blit(title, self.title_rect)
     self.screen.blit(play, self.play_rect)
-    self.screen.blit(map, self.map_rect)
+    self.screen.blit(rules, self.rules_rect)
     self.screen.blit(quit, self.quit_rect)
 
     pygame.display.flip()
@@ -60,3 +65,29 @@ def draw_sprite(self, sprite):
     # Dessiner le sprite sur l'écran
     self.screen.blit(sprite.image, sprite.rect)
     # pygame.draw.rect(self.screen, (255, 255, 255), sprite.rect, 2)
+
+
+def draw_rules(self):
+
+    # Création de la fenêtre de jeu
+    pygame.display.set_caption("Règles Moodle Jump")
+    background = pygame.image.load('assets/regles.png')
+
+    # Affichage de l'arrière-plan
+    self.screen.blit(background, (0, 0))
+
+    # Update de la page
+    pygame.display.flip()
+
+
+def draw_credit(self):
+
+    # Création de la fenêtre de jeu
+    pygame.display.set_caption("Credit Moodle Jump")
+    background = pygame.image.load('assets/credit.png')
+
+    # Affichage de l'arrière-plan
+    self.screen.blit(background, (0, 0))
+
+    # Update de la page
+    pygame.display.flip()

@@ -26,9 +26,10 @@ class Game:
         self.state = "menu"
 
         self.quit_rect = None
-        self.map_rect = None
+        self.rules_rect = None
         self.play_rect = None
         self.title_rect = None
+        self.credit_rect = None
 
         self.score_rect = None
         self.replat_rect = None
@@ -74,8 +75,21 @@ class Game:
                     if self.quit_rect.collidepoint(mouse_pos):
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                             running = False
+                    if self.rules_rect.collidepoint(mouse_pos):
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                            self.state = "rules"
+                    if self.credit_rect.collidepoint(mouse_pos):
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                            self.state = "credit"
 
-                
+                if self.state == "rules":
+                    if key[pygame.K_ESCAPE]:
+                        self.state = "menu"
+
+                if self.state == "credit":
+                    if key[pygame.K_ESCAPE]:
+                        self.state = "menu"
+
                 if self.state == "end":
                     if self.replat_rect.collidepoint(mouse_pos):
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -87,18 +101,22 @@ class Game:
                     if self.quit_rect.collidepoint(mouse_pos):
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                             running = False
-                    
-                    
 
             if self.state == "menu":
                 drawers.draw_menu(self)
+
+            if self.state == "rules":
+                drawers.draw_rules(self)
+
+            if self.state == "credit":
+                drawers.draw_credit(self)
 
             if self.state == "end":
                 drawers.draw_score(self, player.score)
 
             elif self.state == "playing":
 
-                # Met a jour le chrono
+                # Met à jour le chrono
                 chrono.running()
 
                 # Apparition des bullet
@@ -106,12 +124,11 @@ class Game:
                     nb = bullet.Bullet()
                     bullets.add(nb)
                     bullet_timer = current_time
-                         
 
                 # Regarde si le temps est écoulé
-                #timer = self.font.render(str(chrono.get_time()), True, (255, 255, 255))
-                #timer_rect = timer.get_rect((0, 0))
-                #self.screen.blit(timer, timer_rect)
+                # timer = self.font.render(str(chrono.get_time()), True, (255, 255, 255))
+                # timer_rect = timer.get_rect((0, 0))
+                # self.screen.blit(timer, timer_rect)
 
                 # Appelle la fonction permettant de controller le joueur.
                 player.handle_movement(key)
@@ -132,21 +149,19 @@ class Game:
                                 platforms.platforms.remove(platform)
 
                             player.jump()
-                        
 
                     drawers.draw_sprite(self, platform)
 
-                # Gérer la collision entre le joueur et les bullets et le jeu s'arrete
+                # Gérer la collision entre le joueur et les bullets et le jeu s'arrête
                 for b in bullets:
                     if player.rect.colliderect(b.rect):
                         self.state = "end"
-
 
                 platforms.update_plateforms()
                 bullets.update()
                 bullets.draw(self.screen)
 
-                # Si le joeur est dans le 1/3 de l'ecran on fait descendre les plateformes plus vite
+                # Si le joueur est dans le 1/3 de l'écran, on fait descendre les plateformes plus vite
                 if player.rect.y < (constants.SCREEN_HEIGHT * 0.2):
                     platforms.speed = 10
                 elif player.rect.y < (constants.SCREEN_HEIGHT * 0.6):
@@ -154,7 +169,7 @@ class Game:
                 else:
                     platforms.speed = 0
 
-                # Regarde si le joueur est toujours sur l'ecram
+                # Regarde si le joueur est toujours sur l'écran
                 if player.rect.y > constants.SCREEN_HEIGHT:
                     self.state = "end"
 
