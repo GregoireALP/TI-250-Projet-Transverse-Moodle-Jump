@@ -11,6 +11,7 @@ def draw_menu(self):
     background = pygame.image.load('assets/menu.png')
     background = pygame.transform.scale(background, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 
+
     # Affichage de l'arrière-plan
     self.screen.blit(background, (0, 0))
 
@@ -32,14 +33,8 @@ def draw_menu(self):
         center=(SCREEN_WIDTH / 2, 5 * SCREEN_HEIGHT / 6))
     # Créer un rectangle pour cliquer sur le crédit
     self.credit_rect = credit.get_rect(
-        center=(SCREEN_WIDTH - 30, SCREEN_HEIGHT - 20)
+        center=(SCREEN_WIDTH - 33, SCREEN_HEIGHT - 20)
     )
-
-    # Dessiner les textes sur l'écran
-    self.screen.blit(title, self.title_rect)
-    self.screen.blit(play, self.play_rect)
-    self.screen.blit(rules, self.rules_rect)
-    self.screen.blit(quit, self.quit_rect)
 
     pygame.display.flip()
 
