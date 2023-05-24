@@ -6,7 +6,7 @@ import random
 from constants import *
 
 
-def generate_platforms():
+def generate_platforms_init():
     # Initialisation des variables
     current_height = constants.PLAYER_SPWAN[1]
 
@@ -19,16 +19,22 @@ def generate_platforms():
         current_height -= platform_gap_y
 
         # Generate random position for platforms
-        position_x = random.randint(platform_gap_x, constants.SCREEN_WIDTH - platform_gap_x) - 20
+        position_x = random.randint(
+            platform_gap_x, constants.SCREEN_WIDTH - platform_gap_x) - 20
 
         # Check if platform is not too close from the previous one
         if len(positions) > 0:
             while abs(position_x - positions[-1][0]) < platform_gap_x:
-                position_x = random.randint(0, constants.SCREEN_WIDTH - platform_gap_x)
+                position_x = random.randint(
+                    0, constants.SCREEN_WIDTH - platform_gap_x)
 
         positions.append((position_x, current_height))
 
     return positions
+
+
+def generate_single_plateform():
+    return [random.randint(0, constants.SCREEN_WIDTH - 40), 0]
 
 
 class Platforms:
@@ -48,11 +54,13 @@ class Platforms:
     def init_plateforms(self):
 
         # init plateform where player appears
-        self.platforms.add(platform.Platform(constants.PLAYER_SPWAN[0], constants.PLAYER_SPWAN[1] + 20))
+        self.platforms.add(platform.Platform(
+            constants.PLAYER_SPWAN[0], constants.PLAYER_SPWAN[1] + 20))
 
         # Generate plateforms
-        for position in generate_platforms():
-            self.platforms.add(platform.Platform(position[0], position[1], False, False))
+        for position in generate_platforms_init():
+            self.platforms.add(platform.Platform(
+                position[0], position[1], False, False))
 
     def update_plateforms(self):
 
@@ -65,14 +73,17 @@ class Platforms:
                 self.platforms.remove(pl)
 
             # Regenate plateform
-            if len(self.platforms) < constants.PLATEFORMS:
-                for pos in generate_platforms():
-                    if random.random() < 0.15:
-                        self.platforms.add(platform.Platform(pos[0], pos[1] - constants.SCREEN_HEIGHT / 2, True, False))
-                    elif random.random() < 0.3:
-                        self.platforms.add(platform.Platform(pos[0], pos[1] - constants.SCREEN_HEIGHT / 2, False, True))
-                    else:
-                        self.platforms.add(platform.Platform(pos[0], pos[1] - constants.SCREEN_HEIGHT / 2, False, False))
+            if len(self.platforms) + 5 < constants.PLATEFORMS:
+                pos = generate_single_plateform()
+                if random.random() < 0.15:
+                    self.platforms.add(platform.Platform(
+                        pos[0], pos[1] - constants.SCREEN_HEIGHT / 2, True, False))
+                elif random.random() < 0.3:
+                    self.platforms.add(platform.Platform(
+                        pos[0], pos[1] - constants.SCREEN_HEIGHT / 2, False, True))
+                else:
+                    self.platforms.add(platform.Platform(
+                        pos[0], pos[1] - constants.SCREEN_HEIGHT / 2, False, False))
 
             # Check if plateform is moving
             if pl.isMoving:

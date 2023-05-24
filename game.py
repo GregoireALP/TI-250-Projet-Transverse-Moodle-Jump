@@ -1,11 +1,9 @@
 # Import et initialise la bibliothèque pygame
 import pygame
 import sys
-
 import constants
 import bullet
 import drawers
-import chronometre
 from constants import *
 from plateforms import Platforms
 from platform import *
@@ -43,13 +41,13 @@ class Game:
         player = Player()
         platforms = Platforms()
         bullets = pygame.sprite.Group()
-
-        chrono = chronometre.Chronometre()
         bullet_timer = pygame.time.get_ticks()
+        Timer = pygame.time.Clock()
 
         # Création de l'arrière-plan
         background = pygame.image.load('assets/dark_background.png')
-        background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        background = pygame.transform.scale(
+            background, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
         # Boucle de jeu permettant à l'utilisateur de fermer la fenêtre
         while running:
@@ -94,9 +92,9 @@ class Game:
                     if self.replat_rect.collidepoint(mouse_pos):
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                             self.state = "playing"
-                            chrono.reset()
                             platforms.reset()
                             player.reset()
+                            player.score = 0
 
                     if self.quit_rect.collidepoint(mouse_pos):
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -113,11 +111,10 @@ class Game:
 
             if self.state == "end":
                 drawers.draw_score(self, player.score)
+                bullets.empty()
 
             elif self.state == "playing":
-
-                # Met à jour le chrono
-                chrono.running()
+                drawers.score_in_game(self, player.score)
 
                 # Apparition des bullet
                 if current_time - bullet_timer > 6000:
@@ -125,10 +122,9 @@ class Game:
                     bullets.add(nb)
                     bullet_timer = current_time
 
-                # Regarde si le temps est écoulé
-                # timer = self.font.render(str(chrono.get_time()), True, (255, 255, 255))
-                # timer_rect = timer.get_rect((0, 0))
-                # self.screen.blit(timer, timer_rect)
+                timeForScore = current_time / 1000
+                if(60 - timeForScore) <= 0:
+                    self.state = "end"
 
                 # Appelle la fonction permettant de controller le joueur.
                 player.handle_movement(key)
@@ -149,7 +145,7 @@ class Game:
                                 platforms.platforms.remove(platform)
 
                             player.jump()
-
+                    
                     drawers.draw_sprite(self, platform)
 
                 # Gérer la collision entre le joueur et les bullets et le jeu s'arrête

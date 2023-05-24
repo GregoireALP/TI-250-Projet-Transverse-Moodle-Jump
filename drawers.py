@@ -54,6 +54,24 @@ def draw_score(self, score):
 
     pygame.display.flip()
 
+def draw_time(self, time):
+
+    time = self.font.render("Temps: " + str(time), True, (255, 255, 255))
+
+    self.time_rect = time.get_rect(center=(SCREEN_WIDTH - 50, 25))
+
+    self.screen.blit(time, self.time_rect)
+
+    pygame.display.flip()
+
+def score_in_game(self, score):
+    score = self.font.render("Score: " + str(score), True, (255, 255, 255))
+
+    self.score_rect = score.get_rect(center=(80, 25))
+
+    self.screen.blit(score, self.score_rect)
+
+    pygame.display.flip()
 
 def draw_sprite(self, sprite):
 
